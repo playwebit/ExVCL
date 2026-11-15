@@ -1,5 +1,5 @@
 
-name: Build and Validate ExVCL
+name: Build and Publish ExVCL
 
 on:
   workflow_dispatch:
@@ -29,8 +29,33 @@ jobs:
       - name: Validate distributions
         run: python -m twine check dist/*
 
-      - name: Upload wheel and source archive
+      - name: Verify wheel contents
+        run: |
+          python -m zipfile -l dist/*.whl
+
+      - name: Upload distributions
         uses: actions/upload-artifact@v4
         with:
-          name: exvcl-build
+          name: exvcl-distributions
           path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: pypi
+      url: https://pypi.org/p/exvcl
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: exvcl-distributions
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
