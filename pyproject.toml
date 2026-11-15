@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "exvcl"
+version = "0.2.0"
+description = "Execution-verified admission control for continual network intrusion detection"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+authors = [
+    { name = "Priyanshu Chauhan" },
+    { name = "Renu Dalal" },
+]
+keywords = [
+    "continual-learning",
+    "intrusion-detection",
+    "cybersecurity",
+    "evidence-based-admission",
+    "machine-learning",
+    "telemetry",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: 3.9",
+    "Programming Language :: Python :: 3 :: 3.10",
+    "Programming Language :: Python :: 3 :: 3.11",
+    "Programming Language :: Python :: 3 :: 3.12",
+    "Topic :: Security",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "numpy>=1.23",
+    "pandas>=1.5",
+    "scikit-learn>=1.2",
+    "scipy>=1.9",
+]
+
+[project.optional-dependencies]
+lab = [
+    "dpkt",
+    "tabulate",
+    "matplotlib",
+]
+web = [
+    "flask",
+]
+dev = [
+    "pytest",
+    "build",
+    "twine",
+]
+
+[project.scripts]
+exvcl = "exvcl.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/playwebit/ExVCL"
+Repository = "https://github.com/playwebit/ExVCL"
+Issues = "https://github.com/playwebit/ExVCL/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["exvcl", "exvcl.*", "evcl", "evcl.*"]
+
+[tool.setuptools.package-data]
+"exvcl.lab" = ["*.sh", "*.tpl", "*.yaml"]
